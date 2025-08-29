@@ -1,19 +1,18 @@
 Rails.application.routes.draw do
-   root to: "homes#top"
-   resources :products
+  devise_for :users
+  root to: "homes#top"
+  resources :products
+  resources :mypage, only: [:show]
+   # 注文入力・注文作成
+  resources :orders, only: [:index, :new, :create] do 
+    collection do
+      post :confirm   # 注文確認
+    end
 
-  # get "products/new"
-  #  post 'products', to: 'products#create'  # 登録
-  # get "homes/toprails"
-  # get "homes/g"
-  # post 'products', to: 'products#create'  # 登録
-  # get "homes/homes"
-  # get 'products', to: 'products#index'
-  # get 'products/:id', to: 'products#show', as: 'product'
-  # get 'products/:id/edit', to: 'products#edit', as: 'edit_product'
-  # patch 'products/:id', to: 'products#update'
-  # delete 'products/:id', to: 'products#destroy', as: 'destroy_product'
-  
+    member do
+      get :complete  # 注文完了
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -26,6 +25,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
-  
 end
