@@ -2,6 +2,17 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "homes#top"
   resources :products
+  resources :orders, only: [:index, :new, :create] do 
+    collection do
+      get :confirm   # 注文確認
+    end
+
+    member do
+      get :complete  # 注文完了
+    end
+  end
+
+
   resources :mypage, only: [:show]
    # 注文入力・注文作成
   resources :orders, only: [:index, :new, :create] do 
